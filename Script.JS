@@ -1,10 +1,5 @@
-function PlayGame()
+/*function PlayGame()
 {
-    let userWins = 0;
-    let computerWins = 0;
-
-    for(let i = 1; i <= 5; i++)
-    {
         let choice = prompt("Rock, paper or scissor?");
         let computerChoice = GetComputerRandomChoice();
         let result = RockPaperScissorPlayRound(choice, computerChoice);
@@ -23,48 +18,39 @@ function PlayGame()
         {
             console.log(`Round ${i} Tied. You chose: ${choice}. Computer chose: ${computerChoice}.`);
         }
-    }
+} COMMIT THE CHANGES*/
+let userScore = 0;
+let computerScore = 0;
 
-    if(userWins > computerWins)
-    {
-        alert(`You have won the Game!`);
-        computerWins = 0;
-        userWins = 0;
-    }
-    else if(computerWins > userWins)
-    {
-        alert(`You have lost the Game!`);
-        computerWins = 0;
-        userWins = 0;
-    }
-    else
-    {
-        alert(`You have Tied the Game!`);
-        computerWins = 0;
-        userWins = 0;
-    }
-}
-
-function RockPaperScissorPlayRound(choice, computerChoice){
-    computerChoice = computerChoice.toLowerCase();
+function RockPaperScissorPlayRound(choice){
+    let computerChoice = GetComputerRandomChoice().toLowerCase();
     choice = choice.toLowerCase();
 
     if((choice === "rock" && computerChoice === "scissors") ||
     (choice === "scissors" && computerChoice === "paper") ||
     (choice === "paper" && computerChoice === "rock"))
     {
-        return "Win";
+        userScore++;
+        console.log(`Round won. You chose: ${choice}. Computer chose: ${computerChoice}.`);
+        //return "Win";
     }
     else if((choice === "rock" && computerChoice === "paper") ||
     (choice === "scissors" && computerChoice === "rock") ||
     (choice === "paper" && computerChoice === "scissors"))
     {
-        return "Lost";
+        computerScore++;
+        console.log(`Round lost. You chose: ${choice}. Computer chose: ${computerChoice}.`);
+        //return "Lost";
     }
     else
     {
-        return "Tie";
+        console.log(`Round Tied. You chose: ${choice}. Computer chose: ${computerChoice}.`);
+        //return "Tie";
     }
+
+    UpdateScoreboard();
+
+    DeclareWinner();
 }
 
 function GetComputerRandomChoice() {
@@ -73,4 +59,28 @@ function GetComputerRandomChoice() {
     var randomIndex = Math.floor(Math.random() * choices.length);
     
     return choices[randomIndex];
+}
+
+function DeclareWinner(){
+    if(userScore == 5)
+    {
+        alert(`The user wins!`);
+        computerScore = 0;
+        userScore = 0;
+        UpdateScoreboard();
+    }
+    else if(computerScore == 5)
+    {
+        alert(`The computer wins!`);
+        computerScore = 0;
+        userScore = 0;
+        UpdateScoreboard();
+    }
+}
+
+function UpdateScoreboard(){
+    var userScoreElement = document.getElementById("userScore");
+    userScoreElement.textContent = `User score: ${userScore}.`;
+    var computerScoreElement = document.getElementById("computerScore");
+    computerScoreElement.textContent = `User score: ${computerScore}.`; 
 }
